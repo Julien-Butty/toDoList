@@ -7,6 +7,7 @@ use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 class UserController extends Controller
 {
@@ -47,15 +48,15 @@ class UserController extends Controller
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request)
+    public function editAction(User $user, Request $request, PasswordEncoderInterface $passwordEncoder)
     {
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+            $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($passwordEncoder);
 
             $this->getDoctrine()->getManager()->flush();
 
