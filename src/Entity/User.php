@@ -33,6 +33,12 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @var string
+     * @Assert\NotBlank(message="Vous devez saisir un mot de passe")
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
@@ -43,6 +49,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")
      */
     private $tasks;
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $roles = [];
 
     public function getId()
     {
@@ -61,7 +72,7 @@ class User implements UserInterface
 
     public function getSalt()
     {
-        return null;
+//        return null;
     }
 
     public function getPassword()
@@ -86,10 +97,45 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $roles = $this->roles;
+
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return $roles;
     }
+
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
+
+
 
     public function eraseCredentials()
     {
+        $this->plainPassword = null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword(string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
     }
 }

@@ -28,7 +28,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Doctrine\HashPasswordListener:
+        tags:
+            - { name: doctrine.event_subscriber }
 
+
+#    App\Security\TaskVoter:
+                                       ##        tags:
+                                       ##            - { name: security.voter }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

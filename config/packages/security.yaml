@@ -3,10 +3,8 @@ security:
         App\Entity\User: bcrypt
 
     providers:
-        doctrine:
-            entity:
-                class: App:User
-                property: username
+        our_users:
+            entity: { class: App\Entity\User, property: username }
 
     firewalls:
         dev:
@@ -15,16 +13,20 @@ security:
 
         main:
             anonymous: ~
-            pattern: ^/
-            form_login:
-                login_path: login
-                check_path: login_check
-                always_use_default_target_path:  true
-                default_target_path:  /
-            logout: ~
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+#            pattern: ^/
+#            form_login:
+#                login_path: login
+#                check_path: login_check
+#                always_use_default_target_path:  true
+#                default_target_path:  /
+            logout:
+                path: /logout
 
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/users, roles: ROLE_ADMIN }
         - { path: ^/, roles: ROLE_USER }

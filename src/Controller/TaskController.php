@@ -4,9 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use App\Security\TaskVoter;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class TaskController extends Controller
 {
@@ -84,6 +88,7 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
+        $this->denyAccessUnlessGranted('delete', $task);
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();

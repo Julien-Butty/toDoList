@@ -4,12 +4,17 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-
+/**
+ * Class UserController
+ * @package App\Controller
+ * @Security("is_granted('ROLE_ADMIN')")
+ */
 class UserController extends Controller
 {
     /**
@@ -22,19 +27,21 @@ class UserController extends Controller
 
     /**
      * @Route("/users/create", name="user_create")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request, UserPasswordEncoderInterface $encoder )
+    public function createAction(Request $request )
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
 
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
 
+            $user = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -49,15 +56,14 @@ class UserController extends Controller
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function editAction(User $user, Request $request)
     {
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $passwordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($passwordEncoder);
+
 
             $this->getDoctrine()->getManager()->flush();
 

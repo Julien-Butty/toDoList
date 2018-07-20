@@ -3,28 +3,8 @@
 namespace App\Tests\Controller;
 
 
-
-
-
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends SetUp
 {
-
-    private $client = null;
-    private $authClient = null;
-
-    public function setUp()
-    {
-        $this->client = static::createClient();
-        $this->authClient = static::createClient([],[
-            'PHP_AUTH_USER' => 'julien',
-            'PHP_AUTH_PW' => '123456',
-        ]);
-    }
-
 
     public function testNotLoggedHomepage()
     {
@@ -38,25 +18,12 @@ class DefaultControllerTest extends WebTestCase
 
     public function testloggedInHomepage()
     {
+        $this->logIn();
+        $crawler = $this->client->request('GET', '/');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler= $this->authClient->request('GET', '/');
-        $this->assertEquals(200, $this->authClient->getResponse()->getStatusCode());
-        $this->assertSame(1, $crawler->selectLink('Se déconnecter')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("Bienvenue sur Todo List")')->count());
+}
 
 
-    }
-    public function logIn()
-    {
-        $session = $this->client->getContainer()->get('session');
-
-        $firewallName = 'main';
-        $firewallContext = 'main';
-
-        $token = new UsernamePasswordToken('admin', null, $firewallName,array('ROLE_ADMIN'));
-        $session->set('_security_'.$firewallContext, serialize($token));
-        $session->save();
-
-        $cookie = new Cookie($session->getName(), $session->getId());
-        $this->client->getCookieJar()->set($cookie);
-    }
 }
