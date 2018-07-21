@@ -1,33 +1,14 @@
 language: php
+php:
+    - '7.2.1'
 
-php: 
-  - 7.2.1
-
-git:
-  depth: 1
-
-services:
-  - mysql
-
-env:
-  global:
-    - DATABASE_URL="mysql://root:root@127.0.0.1:8889/toDoList"
-
-before_install:
-  - composer self-update
-#  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('root') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-#  - sudo service mysql restart
-#  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
-
-install:
-  - composer install
-  - cp .env .env.dist
-  - bin/console doctrine:database:create --env=test
-  - bin/console doctrine:schema:create --env=test
-  - bin/console doctrine:fixtures:load -n --env=test
+sudo: enabled
 
 script:
-  - bin/phpunit
+    - composer install
+    - bin/console doctrine:database:create --env=test
+    - bin/console doctrine:schema:update --force --env=test
+    - bin/phpunit
 
 notifications:
   email: julienbutty@gmail.com
