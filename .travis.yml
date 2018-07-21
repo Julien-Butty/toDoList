@@ -1,17 +1,19 @@
 language: php
 php:
-    - '7.2.1'
+  - '7.2.1'
 
 sudo: enabled
 
-script:
-    - composer install
-    - bin/console doctrine:database:create --env=test
-    - bin/console doctrine:schema:update --force --env=test
-    - bin/phpunit
+env:
+  global:
+    - DATABASE_URL="mysql://root:root:@127.0.0.1:8889/toDoList"
 
-notifications:
-  email: julienbutty@gmail.com
+script:
+  - composer install
+  - bin/console doctrine:database:create --env=test
+  - bin/console doctrine:schema:update --force --env=test
+  - bin/phpunit
+
 
 
 
