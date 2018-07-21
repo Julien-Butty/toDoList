@@ -1,0 +1,28 @@
+language: php
+
+php: 
+  -7.2.1
+
+services:
+  - mysql
+
+before_install:
+  - composer self-update
+
+install:
+  - composer install
+  - bin/console doctrine:database:create --env=test
+  - bin/console doctrine:schema:create --env=test
+  - bin/console doctrien:fixtures:load -n --env=test
+
+script:
+  - bin/phpunit
+
+notifications:
+  email: julienbutty@gmail.com
+
+
+
+
+
+

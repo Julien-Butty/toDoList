@@ -1,6 +1,6 @@
 /app/config/parameters.yml
 /build/
-/phpunit.xml
+
 /var/*
 !/var/cache
 /var/cache/*
@@ -18,7 +18,7 @@
 /.env
 /public/bundles/
 /var/
-/vendor/
+
 ###< symfony/framework-bundle ###
 
 ###> symfony/web-server-bundle ###
@@ -29,3 +29,7 @@
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###< test coverage  ###
+/report
+###> test coverage ###
