@@ -2,63 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6053057-6a59-4491-b8f2-dd2daa96707d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.css/nv.d3.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.fonts/glyphicons-halflings-regular.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.js/d3.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.js/file.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.js/holder.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.js/html5shiv.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.js/jquery.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.js/nv.d3.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/.js/respond.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Controller/DefaultController.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Controller/SecurityController.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Controller/TaskController.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Controller/UserController.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Controller/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Controller/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/DataFixtures/LoadTask.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/DataFixtures/LoadUsers.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/DataFixtures/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/DataFixtures/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Doctrine/HashPasswordListener.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Doctrine/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Doctrine/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Entity/Task.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Entity/User.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Entity/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Entity/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Form/LoginType.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Form/TaskType.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Form/UserType.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Form/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Form/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Kernel.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Migrations/Version20180712075223.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Migrations/Version20180718162841.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Migrations/Version20180718163738.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Migrations/Version20180719160531.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Migrations/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Migrations/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Repository/UserRepository.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Repository/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Repository/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Security/LoginFormAuthenticator.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Security/TaskVoter.php.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Security/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/Security/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/test-coverage/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -110,7 +58,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="339">
-              <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -118,8 +66,17 @@
       <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-330">
-              <caret column="8" selection-start-column="8" selection-end-column="8" />
+            <state relative-caret-position="130">
+              <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="composer.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/composer.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="415">
+              <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -169,7 +126,6 @@
         <option value="$PROJECT_DIR$/config/routes.yaml" />
         <option value="$PROJECT_DIR$/config/packages/doctrine.yaml" />
         <option value="$PROJECT_DIR$/config/packages/twig.yaml" />
-        <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/phpunit.xml.dist" />
         <option value="$PROJECT_DIR$/config/packages/framework_extra.yaml" />
         <option value="$PROJECT_DIR$/tests/setUpTest.php" />
@@ -201,6 +157,7 @@
         <option value="$PROJECT_DIR$/src/DataFixtures/LoadUsers.php" />
         <option value="$PROJECT_DIR$/src/DataFixtures/LoadTask.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/.travis.yml" />
       </list>
     </option>
@@ -299,11 +256,14 @@
       <path value="$PROJECT_DIR$/vendor/symfony/expression-language" />
       <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/reflection" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-1794" />
-    <option name="y" value="58" />
+    <option name="y" value="57" />
     <option name="width" value="1664" />
     <option name="height" value="932" />
   </component>
@@ -375,7 +335,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -422,15 +382,15 @@
       <workItem from="1531560984378" duration="10000" />
       <workItem from="1531583517915" duration="13803000" />
       <workItem from="1531909214534" duration="16900000" />
-      <workItem from="1532163109219" duration="1466000" />
+      <workItem from="1532163109219" duration="1904000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="82764000" />
+    <option name="totallyTimeSpent" value="83202000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1794" y="58" width="1664" height="932" extended-state="0" />
+    <frame x="-1794" y="57" width="1664" height="932" extended-state="0" />
     <layout>
       <window_info anchor="right" id="PlantUML" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -577,13 +537,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="78">
           <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1274">
-          <caret line="49" column="4" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -786,14 +739,21 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="339">
-          <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-330">
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
+        <state relative-caret-position="130">
+          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
         </state>
       </provider>
     </entry>
