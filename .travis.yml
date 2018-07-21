@@ -11,13 +11,17 @@ services:
 
 before_install:
   - composer self-update
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade
+  - sudo service mysql restart
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
 
 install:
   - composer install
   - cp .env .env.dist
   - bin/console doctrine:database:create --env=test
   - bin/console doctrine:schema:create --env=test
-  - bin/console doctrien:fixtures:load -n --env=test
+  - bin/console doctrine:fixtures:load -n --env=test
 
 script:
   - bin/phpunit
