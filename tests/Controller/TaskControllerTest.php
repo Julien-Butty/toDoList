@@ -9,7 +9,7 @@
 namespace App\Tests\Controller;
 
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
 
 
 class TaskControllerTest extends SetUp
@@ -70,6 +70,51 @@ class TaskControllerTest extends SetUp
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame(1, $crawler->filter('html:contains("Essai Test")')->count());
 
+
+    }
+
+    public function testToggleTaskAction()
+    {
+        $this->logIn('admin');
+        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneBy([]);
+        $id = $task->getId();
+
+        $crawler = $this->client->request('GET', '/tasks/'.$id.'/toggle');
+        $crawler->selectButton('Marquer comme faite');
+
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->followRedirect();
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testDeleteAction()
+    {
+        $this->logIn('admin');
+        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneByContent('Essai Test');
+        $id = $task->getId();
+
+        $crawler = $this->client->request('GET', '/tasks/'.$id.'/delete');
+        $crawler->selectButton('supprimer');
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->followRedirect();
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+    }
+
+    public function testDeleteActionNoAuth()
+    {
+        $this->testCreateAction();
+        $crawler = $this->logIn();
+
+        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneByTitle(['Essai Test']);
+        $id = $task->getId();
+
+
+
+        $this->crawler->request('GET', '/tasks/'.$id.'/delete');
+        $crawler->selectButton('supprimer');
+
+        $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
 
     }
 

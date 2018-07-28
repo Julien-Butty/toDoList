@@ -45,13 +45,13 @@ class LoadTask extends Fixture implements DependentFixtureInterface
         $task5 = new Task();
         $task5->setTitle('Task pour essai ');
         $task5->setContent("Essai");
-        $task5->setUser($this->getReference('user2'));
+        $task5->setUser($this->getReference('user1'));
         $manager->persist($task5);
 
         $task6 = new Task();
         $task6->setTitle('Task pour essai 2');
         $task6->setContent('Essai 2');
-        $task6->setUser($this->getReference('user1'));
+        $task6->setUser($this->getReference('user2'));
         $manager->persist($task6);
 
         $manager->flush();

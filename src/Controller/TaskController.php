@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use App\Handler\TaskHandler;
 use App\Security\TaskVoter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-class TaskController extends Controller
+class TaskController extends TaskHandler
 {
     /**
      * @Route("/tasks", name="task_list")
@@ -25,26 +26,9 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request)
+    public function createAction(TaskHandler $handler)
     {
-        $task = new Task();
-        $form = $this->createForm(TaskType::class, $task);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $task->setUser($this->getUser());
-            $em->persist($task);
-            $em->flush();
-
-            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
-
-            return $this->redirectToRoute('task_list');
-        }
-
-        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
+        return $handler->createTask();
     }
 
     /**

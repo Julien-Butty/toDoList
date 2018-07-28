@@ -22,17 +22,36 @@ abstract class SetUp extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function logIn()
+    public function logIn($username = 'user')
     {
-        $session = $this->client->getContainer()->get('session');
+        if ($username== 'admin') {
 
-        $firewallName = 'main';
+            $user = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:User')->findOneByUsername('admin');
+            $role = $user->getRoles();
+            $session = $this->client->getContainer()->get('session');
 
-        $token = new UsernamePasswordToken('julien', null, $firewallName, array('ROLE_USER'));
-        $session->set('_security_'.$firewallName, serialize($token));
-        $session->save();
+            $firewallName = 'main';
 
-        $cookie = new Cookie($session->getName(), $session->getId());
-        $this->client->getCookieJar()->set($cookie);
+            $token = new UsernamePasswordToken($user, null, $firewallName, $role);
+            $session->set('_security_' . $firewallName, serialize($token));
+            $session->save();
+
+            $cookie = new Cookie($session->getName(), $session->getId());
+            $this->client->getCookieJar()->set($cookie);
+        } else  {
+
+            $user = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:User')->findOneByUsername('user');
+            $role = $user->getRoles();
+            $session = $this->client->getContainer()->get('session');
+
+            $firewallName = 'main';
+
+            $token = new UsernamePasswordToken($user, null, $firewallName, $role);
+            $session->set('_security_' . $firewallName, serialize($token));
+            $session->save();
+
+            $cookie = new Cookie($session->getName(), $session->getId());
+            $this->client->getCookieJar()->set($cookie);
+        }
     }
 }
