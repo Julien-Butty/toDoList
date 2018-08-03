@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Task
 {
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -105,9 +106,9 @@ class Task
     }
 
     /**
-     * @param mixed $user
+     * @param \Symfony\Component\Security\Core\User\User $user
      */
-    public function setUser($user): void
+    public function setUser( User $user): void
     {
         $this->user = $user;
     }

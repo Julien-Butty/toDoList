@@ -13,9 +13,10 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-class TaskController extends TaskHandler
+class TaskController extends Controller
 {
     /**
+     *
      * @Route("/tasks", name="task_list")
      */
     public function listAction()
@@ -25,10 +26,13 @@ class TaskController extends TaskHandler
 
     /**
      * @Route("/tasks/create", name="task_create")
+     * @param Request $request
+     * @param TaskHandler $handler
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(TaskHandler $handler)
+    public function createAction(Request $request, TaskHandler $handler)
     {
-        return $handler->createTask();
+        return $handler->createTask($request,$this->getUser());
     }
 
     /**

@@ -18,7 +18,7 @@ env:
         - DATABASE_URL="mysql://root:@127.0.0.1:3306/mysql_extensions"
         - PHPUNIT_FLAGS="-v"
         - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
-        - CC_TEST_REPORTER_ID=79caf3f59a0c83ace928128a70365fb889fdab758b450007bab4fe347c687383
+
 
 matrix:
     fast_finish: true
@@ -42,14 +42,9 @@ install:
     - ./vendor/bin/simple-phpunit install
     - php bin/console doctrine:schema:update --force
 
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 
 script:
     - composer validate --strict --no-check-lock
     # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
     # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
     - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS ./tests/
-    - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

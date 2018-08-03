@@ -9,7 +9,9 @@
 namespace App\Handler;
 
 
+use App\Controller\TaskController;
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,7 +19,12 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 
 class TaskHandler extends Controller
 {
@@ -25,52 +32,57 @@ class TaskHandler extends Controller
      * @var EntityManagerInterface
      */
     private $entityManager;
+
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-    /**
-     * @var FormInterface
+     * @var FormFactoryInterface
      */
     private $form;
     /**
      * @var EngineInterface
      */
     private $templating;
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+    /**
+     * @var RouterInterface
+     */
+    private $router;
 
 
-    public function __construct(EntityManagerInterface $entityManager, RequestStack $requestStack, FormFactoryInterface $form, EngineInterface $templating)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        FormFactoryInterface $form,
+        EngineInterface $templating,
+        TokenStorageInterface $tokenStorage,
+        RouterInterface $router
+    )
     {
         $this->entityManager = $entityManager;
-
-        $this->requestStack = $requestStack;
-
         $this->form = $form;
-
         $this->templating = $templating;
+        $this->tokenStorage = $tokenStorage;
+        $this->router = $router;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function createTask()
+
+    public function createTask(Request $request, User $user)
     {
         $task = new Task();
-        
-        $form = $this->form->create(TaskType::class);
 
-        $form->handleRequest($this->requestStack->getCurrentRequest());
+        $form = $this->form->create(TaskType::class,$task);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
-            $task->setUser($this->getUser());
+            $task->setUser($user);
             $this->entityManager->persist($task);
             $this->entityManager->flush();
+            $request->getSession()->getFlashBag()->add('success', 'La tâche a été bien été ajoutée.');
 
-            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+            return new RedirectResponse($this->router->generate('task_list', ['task'=>$this->entityManager->getRepository(Task::class)->findAll()]));
 
-            return $this->redirectToRoute('task_list');
         }
 
         return $this->templating->renderResponse('task/create.html.twig', [ 'form' => $form->createView()]);

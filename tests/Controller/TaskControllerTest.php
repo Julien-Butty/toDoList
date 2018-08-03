@@ -90,7 +90,7 @@ class TaskControllerTest extends SetUp
     public function testDeleteAction()
     {
         $this->logIn('admin');
-        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneByContent('Essai Test');
+        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneBy(array('content'=>'Essai user anonyme'));
         $id = $task->getId();
 
         $crawler = $this->client->request('GET', '/tasks/'.$id.'/delete');
@@ -106,7 +106,7 @@ class TaskControllerTest extends SetUp
         $this->testCreateAction();
         $crawler = $this->logIn();
 
-        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneByTitle(['Essai Test']);
+        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneBy(array('content' =>'Essai Test'));
         $id = $task->getId();
 
 
