@@ -30,15 +30,15 @@ class TaskControllerTest extends SetUp
 
     }
 
-    public function testCreateAction()
+    public function testCreateAdminAction()
     {
-        $this->logIn();
+        $this->logIn('admin');
         $crawler = $this->client->request('GET', '/tasks/create');
 
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');
         $form = $buttonCrawlerNode->form(array(
-            'task[title]' => 'Essai Test',
-            'task[content]' => 'Essai Test'
+            'task[title]' => 'Essai Admin',
+            'task[content]' => 'Essai Admin'
         ));
 
         $this->client->submit($form);
@@ -89,8 +89,9 @@ class TaskControllerTest extends SetUp
 
     public function testDeleteAction()
     {
+        $this->testCreateAdminAction();
         $this->logIn('admin');
-        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneBy(array('content'=>'Essai user anonyme'));
+        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneBy(array('content'=>'Essai Admin'));
         $id = $task->getId();
 
         $crawler = $this->client->request('GET', '/tasks/'.$id.'/delete');
@@ -103,15 +104,13 @@ class TaskControllerTest extends SetUp
 
     public function testDeleteActionNoAuth()
     {
-        $this->testCreateAction();
-        $crawler = $this->logIn();
+        $this->testCreateAdminAction();
+        $this->logIn();
 
-        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneBy(array('content' =>'Essai Test'));
+        $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneBy(array('content' =>'Essai Admin'));
         $id = $task->getId();
 
-
-
-        $this->crawler->request('GET', '/tasks/'.$id.'/delete');
+        $crawler = $this->client->request('GET', '/tasks/'.$id.'/delete');
         $crawler->selectButton('supprimer');
 
         $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
