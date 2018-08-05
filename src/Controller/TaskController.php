@@ -32,20 +32,26 @@ class TaskController extends Controller
      */
     public function createAction(Request $request, TaskHandler $handler)
     {
-        return $handler->createTask($request,$this->getUser());
+        $form = $handler->createTask($request,$this->getUser());
+
+        if ($form->isSubmitted()) {
+
+            $this->addFlash('success', 'Votre tâche a bien été ajoutée');
+
+            return $this->redirectToRoute('task_list');
+        }
+
+       return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(Task $task, Request $request)
+    public function editAction(Request $request, TaskHandler $handler, Task $task)
     {
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $handler->editTask($request, $task);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted()){
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
@@ -61,10 +67,9 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTaskAction(Task $task, TaskHandler $handler)
     {
-        $task->toggle(!$task->isDone());
-        $this->getDoctrine()->getManager()->flush();
+        $handler->toggleTask($task);
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
@@ -74,12 +79,10 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTaskAction(Task $task, TaskHandler $handler)
     {
         $this->denyAccessUnlessGranted('delete', $task);
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        $handler->deleteTask($task);
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 

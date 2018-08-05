@@ -41,6 +41,7 @@ install:
     - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
     - ./vendor/bin/simple-phpunit install
     - php bin/console doctrine:schema:update --force
+    - php bin/console doctrine:fixtures:load
 
 
 script:

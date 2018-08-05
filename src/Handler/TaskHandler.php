@@ -9,84 +9,81 @@
 namespace App\Handler;
 
 
-use App\Controller\TaskController;
 use App\Entity\Task;
 use App\Entity\User;
+use App\Form\Handler\TaskTypeHandler;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
-
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
 
 class TaskHandler extends Controller
 {
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
-
+    private $em;
     /**
      * @var FormFactoryInterface
      */
     private $form;
     /**
-     * @var EngineInterface
+     * @var TaskTypeHandler
      */
-    private $templating;
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private $typeHandler;
 
 
     public function __construct(
-        EntityManagerInterface $entityManager,
+        EntityManagerInterface $em,
         FormFactoryInterface $form,
-        EngineInterface $templating,
-        TokenStorageInterface $tokenStorage,
-        RouterInterface $router
+        TaskTypeHandler $typeHandler
     )
     {
-        $this->entityManager = $entityManager;
+        $this->em = $em;
         $this->form = $form;
-        $this->templating = $templating;
-        $this->tokenStorage = $tokenStorage;
-        $this->router = $router;
+        $this->typeHandler = $typeHandler;
     }
 
 
     public function createTask(Request $request, User $user)
     {
         $task = new Task();
+        $task->setUser($user);
 
-        $form = $this->form->create(TaskType::class,$task);
+        $form = $this->form->create(TaskType::class, $task);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $this->typeHandler->handleForm($form, $task);
 
-            $task->setUser($user);
-            $this->entityManager->persist($task);
-            $this->entityManager->flush();
-            $request->getSession()->getFlashBag()->add('success', 'La tâche a été bien été ajoutée.');
+        return $form;
+    }
 
-            return new RedirectResponse($this->router->generate('task_list', ['task'=>$this->entityManager->getRepository(Task::class)->findAll()]));
+    public function editTask(Request $request, Task $task)
+    {
+        $form = $this->form->create(TaskType::class, $task);
+        $form->handleRequest($request);
 
-        }
+        $this->typeHandler->handleForm($form, $task);
 
-        return $this->templating->renderResponse('task/create.html.twig', [ 'form' => $form->createView()]);
+        return $form;
 
     }
+
+    public function toggleTask(Task $task)
+    {
+        $task->toggle(!$task->isDone());
+
+        $this->em->flush();
+    }
+
+    public function deleteTask(Task $task)
+    {
+
+        $this->em->remove($task);
+
+        $this->em->flush();
+    }
+
 
 }
