@@ -46,7 +46,7 @@ class TaskControllerTest extends SetUp
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $crawler = $this->client->followRedirect();
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $crawler->filter('html:contains("Essai Test")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Essai Admin")')->count());
     }
 
     public function testEditAction()
