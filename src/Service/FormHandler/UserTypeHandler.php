@@ -2,20 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: julienbutty
- * Date: 03/08/2018
- * Time: 21:25
+ * Date: 06/08/2018
+ * Time: 08:21
  */
 
-namespace App\Form\Handler;
+namespace App\Service\FormHandler;
 
 
-use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 
-class TaskTypeHandler
+
+class UserTypeHandler
 {
     /**
      * @var EntityManagerInterface
@@ -27,19 +26,22 @@ class TaskTypeHandler
         $this->em = $em;
     }
 
-    public function handleForm(FormInterface $taskType, Task $task):bool
+    /**
+     * @param FormInterface $userType
+     * @param User $user
+     * @return bool
+     */
+    public function handleForm(FormInterface $userType, User $user)
     {
+        if($userType->isSubmitted() && $userType->isValid()) {
 
-        if ($taskType->isSubmitted() && $taskType->isValid()) {
-
-            $this->em->persist($task);
+            $this->em->persist($user);
             $this->em->flush();
 
             return true;
         }
+
         return false;
+
     }
-
-
-
 }

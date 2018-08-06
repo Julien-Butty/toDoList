@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Service\ControllerHandler\UserHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,22 +29,14 @@ class UserController extends Controller
     /**
      * @Route("/users/create", name="user_create")
      * @param Request $request
+     * @param UserHandler $userHandler
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request )
+    public function createAction(Request $request, UserHandler $userHandler )
     {
-        $user = new User();
+        $form = $userHandler->createUser($request);
 
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $user = $form->getData();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+        if ($form->isSubmitted()) {
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
@@ -55,17 +48,17 @@ class UserController extends Controller
 
     /**
      * @Route("/users/{id}/edit", name="user_edit")
+     * @param Request $request
+     * @param User $user
+     * @param UserHandler $userHandler
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(User $user, Request $request)
+    public function editAction(Request $request, User $user, UserHandler $userHandler)
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $userHandler->editUser($request, $user);
 
-        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-
-            $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 

@@ -6,12 +6,12 @@
  * Time: 00:38
  */
 
-namespace App\Handler;
+namespace App\Service\ControllerHandler;
 
 
 use App\Entity\Task;
 use App\Entity\User;
-use App\Form\Handler\TaskTypeHandler;
+use App\Service\FormHandler\TaskTypeHandler;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,6 +34,12 @@ class TaskHandler extends Controller
     private $typeHandler;
 
 
+    /**
+     * TaskHandler constructor.
+     * @param EntityManagerInterface $em
+     * @param FormFactoryInterface $form
+     * @param TaskTypeHandler $typeHandler
+     */
     public function __construct(
         EntityManagerInterface $em,
         FormFactoryInterface $form,
@@ -46,6 +52,11 @@ class TaskHandler extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createTask(Request $request, User $user)
     {
         $task = new Task();
@@ -59,6 +70,11 @@ class TaskHandler extends Controller
         return $form;
     }
 
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function editTask(Request $request, Task $task)
     {
         $form = $this->form->create(TaskType::class, $task);
@@ -70,6 +86,9 @@ class TaskHandler extends Controller
 
     }
 
+    /**
+     * @param Task $task
+     */
     public function toggleTask(Task $task)
     {
         $task->toggle(!$task->isDone());
@@ -77,6 +96,9 @@ class TaskHandler extends Controller
         $this->em->flush();
     }
 
+    /**
+     * @param Task $task
+     */
     public function deleteTask(Task $task)
     {
 

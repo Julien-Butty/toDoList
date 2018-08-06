@@ -16,14 +16,14 @@ class DefaultControllerTest extends SetUp
         $this->assertCount(1, $crawler->selectButton('Se connecter'));
     }
 
-    public function testloggedInHomepage()
+    public function testLoggedInHomepage()
     {
         $this->logIn();
         $crawler = $this->client->request('GET', '/');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $this->assertEquals(1, $crawler->filter('html:contains("Bienvenue sur Todo List")')->count());
-}
+    }
 
 
 }
