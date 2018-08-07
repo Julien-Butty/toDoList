@@ -1,11 +1,11 @@
 language: php
 sudo: false
 services:
-    - mysql
+  - mysql
 cache:
-    directories:
-        - $HOME/.composer/cache/files
-        - $HOME/symfony-bridge/.phpunit
+  directories:
+    - $HOME/.composer/cache/files
+    - $HOME/symfony-bridge/.phpunit
 addons:
   apt:
     sources:
@@ -14,38 +14,43 @@ addons:
       - mysql-server
       - mysql-client
 env:
-    global:
-        - DATABASE_URL="mysql://root:@127.0.0.1:3306/mysql_extensions"
-        - PHPUNIT_FLAGS="-v"
-        - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
-
+  global:
+    - DATABASE_URL="mysql://root:@127.0.0.1:3306/mysql_extensions"
+    - PHPUNIT_FLAGS="-v"
+    - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+    - CC_TEST_REPORTER_ID=2972903731ed2d1d00252363eb1088beef614e908513ca091e0616ffce977633
 
 matrix:
-    fast_finish: true
-    include:
-        - php: 7.2
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+  fast_finish: true
+  include:
+    - php: 7.2
+      env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
 
 before_install:
-    - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-    - sudo mysql_upgrade
-    - sudo service mysql restart
-    - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-    - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-    - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
-    - mysql -e 'CREATE DATABASE IF NOT EXISTS mysql_extensions;'
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade
+  - sudo service mysql restart
+  - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+  - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
+  - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS mysql_extensions;'
 
 install:
-    # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
-    - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-    - ./vendor/bin/simple-phpunit install
-    - php bin/console doctrine:schema:update --force
-    - php bin/console doctrine:fixtures:load --append
+# To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
+  - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+  - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+  - ./vendor/bin/simple-phpunit install
+  - php bin/console doctrine:schema:update --force
+  - php bin/console doctrine:fixtures:load --append
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script:
-    # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
-    # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
-    - composer validate --strict --no-check-lock
-    - ./vendor/bin/simple-phpunit $PHPUNIT FLAGS ./tests/
+  - composer validate --strict --no-check-lock
+# simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
+# it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
+  - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS ./tests/
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
