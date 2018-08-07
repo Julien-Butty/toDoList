@@ -47,4 +47,5 @@ install:
 script:
     # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
     # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
+    - composer validate --strict --no-check-lock
     - ./vendor/bin/simple-phpunit $PHPUNIT FLAGS ./tests/
