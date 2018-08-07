@@ -6,6 +6,7 @@
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
+
 >
     <php>
         <ini name="error_reporting" value="-1" />
@@ -15,6 +16,7 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1:8889/toDoList"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
         <!-- define your env variables for the test env here -->
     </php>
 
