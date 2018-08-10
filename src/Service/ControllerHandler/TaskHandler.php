@@ -12,11 +12,11 @@ namespace App\Service\ControllerHandler;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Service\FormHandler\TaskTypeHandler;
-use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormInterface;
+
 
 class TaskHandler extends Controller
 {
@@ -24,65 +24,54 @@ class TaskHandler extends Controller
      * @var EntityManagerInterface
      */
     private $em;
-    /**
-     * @var FormFactoryInterface
-     */
-    private $form;
-    /**
-     * @var TaskTypeHandler
-     */
-    private $typeHandler;
-
 
     /**
      * TaskHandler constructor.
      * @param EntityManagerInterface $em
-     * @param FormFactoryInterface $form
-     * @param TaskTypeHandler $typeHandler
      */
     public function __construct(
-        EntityManagerInterface $em,
-        FormFactoryInterface $form,
-        TaskTypeHandler $typeHandler
-    )
-    {
+        EntityManagerInterface $em
+    ){
         $this->em = $em;
-        $this->form = $form;
-        $this->typeHandler = $typeHandler;
     }
 
 
     /**
-     * @param Request $request
-     * @param User $user
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createTask(Request $request, User $user)
-    {
-        $task = new Task();
-        $task->setUser($user);
-
-        $form = $this->form->create(TaskType::class, $task);
-        $form->handleRequest($request);
-
-        $this->typeHandler->handleForm($form, $task);
-
-        return $form;
-    }
-
-    /**
-     * @param Request $request
+     * @param FormInterface $taskType
      * @param Task $task
-     * @return \Symfony\Component\Form\FormInterface
+     * @param User $user
+     * @return bool
      */
-    public function editTask(Request $request, Task $task)
+    public function createTask(FormInterface $taskType,Task $task, User $user)
     {
-        $form = $this->form->create(TaskType::class, $task);
-        $form->handleRequest($request);
+        if($taskType->isSubmitted() && $taskType->isValid()) {
 
-        $this->typeHandler->handleForm($form, $task);
+            $task->setUser($user);
+            $this->em->persist($task);
+            $this->em->flush();
 
-        return $form;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param FormInterface $taskType
+     * @param Task $task
+     * @return bool
+     */
+    public function editTask(FormInterface $taskType, Task $task)
+    {
+        if ($taskType->isSubmitted() && $taskType->isValid()) {
+
+            $this->em->persist($task);
+            $this->em->flush();
+
+            return true;
+        }
+
+        return false;
 
     }
 
@@ -101,11 +90,8 @@ class TaskHandler extends Controller
      */
     public function deleteTask(Task $task)
     {
-
         $this->em->remove($task);
 
         $this->em->flush();
     }
-
-
 }

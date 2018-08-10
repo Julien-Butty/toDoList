@@ -10,11 +10,9 @@ namespace App\Service\ControllerHandler;
 
 
 use App\Entity\User;
-use App\Service\FormHandler\UserTypeHandler;
-use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormInterface;
+
 
 class UserHandler
 {
@@ -22,51 +20,50 @@ class UserHandler
      * @var EntityManagerInterface
      */
     private $em;
-    /**
-     * @var FormFactoryInterface
-     */
-    private $form;
-    /**
-     * @var UserTypeHandler
-     */
-    private $typeHandler;
 
-    public function __construct(EntityManagerInterface $em, FormFactoryInterface $form, UserTypeHandler $typeHandler)
+    /**
+     * UserHandler constructor.
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->form = $form;
-        $this->typeHandler = $typeHandler;
     }
 
     /**
-     * @param Request $request
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createUser(Request $request)
-    {
-        $user = new User();
-
-        $form = $this->form->create(UserType::class, $user);
-        $form->handleRequest($request);
-
-        $this->typeHandler->handleForm($form, $user);
-
-        return $form;
-    }
-
-    /**
-     * @param Request $request
+     * @param FormInterface $userType
      * @param User $user
-     * @return \Symfony\Component\Form\FormInterface
+     * @return bool
      */
-    public function editUser(Request $request, User $user)
+    public function createUser(FormInterface $userType, User $user )
     {
-        $form = $this->form->create(UserType::class, $user);
-        $form->handleRequest($request);
+        if ($userType->isSubmitted() && $userType->isValid()) {
 
-        $this->typeHandler->handleForm($form, $user);
+            $this->em->persist($user);
+            $this->em->flush();
 
-        return $form;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param FormInterface $userType
+     * @param User $user
+     * @return bool
+     */
+    public function editUser(FormInterface $userType, User $user)
+    {
+        if ($userType->isSubmitted() && $userType->isValid()) {
+
+            $this->em->persist($user);
+            $this->em->flush();
+
+            return true;
+        }
+
+        return false;
     }
 
 }

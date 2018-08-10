@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Service\ControllerHandler\UserHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,22 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends Controller
 {
+
+    /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+    /**
+     * @var UserHandler
+     */
+    private $userHandler;
+
+    public function __construct(FormFactoryInterface $formFactory, UserHandler $userHandler)
+    {
+        $this->formFactory = $formFactory;
+        $this->userHandler = $userHandler;
+    }
+
     /**
      * @Route("/users", name="user_list")
      */
@@ -29,14 +46,14 @@ class UserController extends Controller
     /**
      * @Route("/users/create", name="user_create")
      * @param Request $request
-     * @param UserHandler $userHandler
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createAction(Request $request, UserHandler $userHandler )
+    public function createAction(Request $request)
     {
-        $form = $userHandler->createUser($request);
+        $user =new User();
+        $form = $this->formFactory->create(UserType::class, $user)->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($this->userHandler->createUser($form, $user)) {
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
@@ -53,12 +70,11 @@ class UserController extends Controller
      * @param UserHandler $userHandler
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, User $user, UserHandler $userHandler)
+    public function editAction(Request $request, User $user)
     {
-        $form = $userHandler->editUser($request, $user);
+        $form = $this->formFactory->create(UserType::class, $user)->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-
+        if ($this->userHandler->editUser($form, $user)) {
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
