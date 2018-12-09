@@ -11,7 +11,10 @@ namespace App\tests\Doctrine;
 
 use App\Doctrine\HashPasswordListener;
 use App\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\UnitOfWork;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Tests\Encoder\UserPasswordEncoderTest;
@@ -36,7 +39,44 @@ class HashPasswordListenerTest extends TestCase
         $hashPass->prePersist($mockArgs);
 
     }
-    
+
+    public function testPreUpdate()
+    {
+        $mockEncoder = $this->getMockBuilder(UserPasswordEncoderInterface::class)->disableOriginalConstructor()->getMock();
+
+        $mockArgs = $this->getMockBuilder(LifecycleEventArgs::class)->disableOriginalConstructor()->getMock();
+
+        $hashPass = new HashPasswordListener($mockEncoder);
+
+
+        $user = new User();
+        $user->setPlainPassword('123');
+
+        $classMetadata = $this->createMock(ClassMetadata::class);
+
+        $entityManager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $entityManager
+            ->method('getClassMetadata')
+            ->willReturn($classMetadata);
+
+        $unitOfWork = $this->getMockBuilder(UnitOfWork::class)->disableOriginalConstructor()->getMock();
+
+        $entityManager
+            ->method('getUnitOfWork')
+            ->willReturn($unitOfWork);
+
+        $lifeCycleEventArgs = new LifecycleEventArgs($user, $entityManager);
+
+        $hashPass->preUpdate($lifeCycleEventArgs);
+
+        $this->assertEquals('123', $user->getPlainPassword());
+//        $this->assertNull($user->getPlainPassword());
+
+
+
+    }
+
+
 
 
 }

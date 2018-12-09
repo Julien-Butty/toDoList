@@ -34,6 +34,7 @@ class LoadUsers extends Fixture
         $password = $this->encoder->encodePassword($user1, '123456');
         $user1->setPassword($password);
         $user1->setRoles(['ROLE_ADMIN']);
+        $user1->setActive(1);
         $manager->persist($user1);
         $this->addReference('user1', $user1);
 
@@ -43,6 +44,7 @@ class LoadUsers extends Fixture
         $password = $this->encoder->encodePassword($user2, '123456');
         $user2->setPassword($password);
         $user2->setRoles(['ROLE_USER']);
+        $user1->setActive(1);
         $manager->persist($user2);
         $this->addReference('user2', $user2);
 

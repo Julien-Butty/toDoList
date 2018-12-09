@@ -34,6 +34,13 @@ class UserType extends AbstractType
                     'Admin' => 'ROLE_ADMIN'
                 ],
             ])
+            ->add('active', ChoiceType::class, [
+                'label' => 'Statut du compte',
+                'choices' => [
+                    'Compte activé' => 1,
+                    'Compte désactivé' => 0,
+                ],
+            ])
         ;
     }
 
