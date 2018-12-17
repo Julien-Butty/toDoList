@@ -1,0 +1,48 @@
+# .blackfire.yml
+
+tests:
+  "Toutes les pages sont rapides":
+    path: "/.*"
+    assertions:
+      - main.wall_time < 60ms
+      - main.memory < 2Mb
+  "Tests spécifiques à Symfony":
+    path: "/.*"
+    assertions:
+      - metrics.symfony.kernel.debug.count == 0 # en mode production
+      - metrics.symfony.yaml.reads.count == 0 # mise en cache du YAML
+  "Tests spécifiques à Twig":
+    path: "/.*"
+    assertions:
+      - metrics.twig.compile.count == 0 # Pas de compilation en production
+      - metrics.twig.attributes.get.count < 30 # Pas trop de logique dans les templates
+  'Symfony config resource tracking should be disabled in production':
+    path:
+      - '/.*'
+    methods:
+      - ANY
+    assertions:
+      - { label: null, expression: 'metrics.symfony.config_check.count == 0' }
+    exclude: {  }
+  'Symfony debug mode should be disabled in production':
+    path:
+      - '/.*'
+    methods:
+      - ANY
+    command: '.*'
+    assertions:
+      - { label: null, expression: 'metrics.symfony.kernel.debug.count == 0' }
+    exclude: {  }
+
+  'The Composer autoloader class map should be dumped in production':
+    path:
+      - '/.*'
+    methods:
+      - ANY
+    command: '.*'
+    assertions:
+      - { label: null, expression: 'metrics.composer.autoload.find_file.count <= 50' }
+    exclude: {  }
+
+
+

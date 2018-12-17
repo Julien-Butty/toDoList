@@ -11,6 +11,21 @@ use PHPUnit\Framework\TestCase;
 
 class TaskVoterTest extends TestCase
 {
+
+    public function voteOnAttributeTest()
+    {
+        $reflectionClass = new \ReflectionClass(TaskVoterTest::class);
+        $reflectionMethod = $reflectionClass->getMethod('voteOnAttribute');
+        $reflectionMethod->setAccessible(true);
+
+        $voter = new TaskVoter();
+        $task = new Task();
+        $attribute = 'EDIT';
+
+
+
+
+    }
     public function testCanEdit()
     {
         $user = new User();

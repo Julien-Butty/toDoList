@@ -1,4 +1,4 @@
-bdoctrine:
+doctrine:
     orm:
         metadata_cache_driver:
             type: service

@@ -7,6 +7,7 @@ namespace App\tests\Security;
 use App\Entity\User;
 use App\Security\UserChecker;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -17,24 +18,41 @@ class UserCheckerTest extends TestCase
      */
     public function testPreAuth()
     {
-        $userInterface = $this->createMock(UserInterface::class);
+
         $user = new User();
         $user->setUsername('test');
         $user->setRoles(['ROLE_ADMIN']);
         $user->setActive(1);
 
+        $userChecker = new UserChecker();
 
-        $userInterface->expects($this->once())->method('getUserName')->willReturn($user->getUsername());
-        $userInterface->expects($this->once())->method('getRoles')->willReturn($user->getRoles());
+        $mockUser = $this->createMock(UserInterface::class);
+        $this->assertNull($userChecker->checkPreAuth($mockUser));
 
+        $this->assertNull($userChecker->checkPreAuth($user));
+        $user->setActive(0);
+        $this->expectException(CustomUserMessageAuthenticationException::class);
+        $this->assertNull($userChecker->checkPreAuth($user));
+    }
+
+    public function testPostAuth()
+    {
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setActive(1);
 
         $userChecker = new UserChecker();
 
+        $mockUser = $this->createMock(UserInterface::class);
+        $this->assertNull($userChecker->checkPostAuth($mockUser));
 
-
-
-        dump($userInterface);
-
-        $this->assertEquals('Votre compte a été désactivé :(',$userChecker->checkPreAuth($userInterface));
+        $this->assertNull($userChecker->checkPostAuth($user));
+        $user->setActive(0);
+        $this->expectException(CustomUserMessageAuthenticationException::class);
+        $this->assertNull($userChecker->checkPostAuth($user));
     }
+
+
 }
