@@ -53,7 +53,20 @@ class TaskVoter extends Voter
         throw new \LogicException('This code should not be reached');
     }
 
-    private function canDelete(Task $task, User $user)
+    public function canEdit(Task $task, User $user)
+    {
+        if ($task->getUser() === $user ) {
+            return true;
+        }
+
+        if ($task->getUser() === null && in_array('ROLE_ADMIN', $user->getRoles())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function canDelete(Task $task, User $user)
     {
         if ($task->getUser() === $user ) {
             return true;

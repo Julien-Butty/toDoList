@@ -5,8 +5,11 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Form\UserType;
+use App\Repository\TaskRepository;
 use App\Service\ControllerHandler\TaskHandler;
 use App\Security\TaskVoter;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -33,15 +36,23 @@ class TaskController extends Controller
      */
     private $taskHandler;
 
+    private $em;
+    /**
+     * @var TaskRepository
+     */
+    private $taskRepository;
+
     /**
      * TaskController constructor.
      * @param TaskHandler $taskHandler
      * @param FormFactoryInterface $form
      */
-    public function __construct(FormFactoryInterface $formFactory,TaskHandler $taskHandler)
+    public function __construct(FormFactoryInterface $formFactory,TaskHandler $taskHandler, EntityManagerInterface $em, TaskRepository $taskRepository)
     {
         $this->formFactory = $formFactory;
         $this->taskHandler = $taskHandler;
+        $this->em = $em;
+        $this->taskRepository = $taskRepository;
     }
 
     /**
@@ -50,7 +61,17 @@ class TaskController extends Controller
      */
     public function listAction()
     {
-        return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository(Task::class)->findAll()]);
+//
+        return $this->render('task/list.html.twig', ['tasks' => $this->taskRepository->findAllByCached()]);
+//        return $this->render('task/list.html.twig', ['tasks' => $query]);
+    }
+
+    /**
+     * @Route("/tasks/done", name="task_done"))
+     */
+    public function listDoneAction()
+    {
+        return $this->render('task/list.html.twig', ['tasks'=> $this->taskRepository->findDoneByCached()]);
     }
 
     /**

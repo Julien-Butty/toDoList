@@ -4,11 +4,12 @@
     {% if error %}
         <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
+<div class="border rounded p-2">
     {{ form_start(form) }}
     {{ form_row(form._username) }}
     {{ form_row(form._password) }}
 
         <button type="submit" class="btn btn-success">Se connecter</button>
     {{ form_end(form) }}
+</div>
 {% endblock %}

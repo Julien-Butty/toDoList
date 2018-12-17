@@ -41,10 +41,13 @@ class UserControllerTest extends SetUp
             'user[plainPassword]'=>array('first'=>'123', 'second'=>'123'),
 
             'user[email]'=>'user@gmail.com',
-            'user[roles]'=>array('ROLE_USER','ROLE_ADMIN')
+            'user[roles]'=>array('ROLE_USER','ROLE_ADMIN'),
+            'user[active]'=> 1
         ]);
 
+
         $this->client->submit($form);
+
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $crawler = $this->client->followRedirect();
@@ -68,7 +71,8 @@ class UserControllerTest extends SetUp
             'user[plainPassword]'=>array('first'=>'123', 'second'=>'123'),
 
             'user[email]'=>'user@gmail.com',
-            'user[roles]'=>array('ROLE_USER','ROLE_ADMIN')
+            'user[roles]'=>array('ROLE_USER','ROLE_ADMIN'),
+            'user[active]' => 1
         ]);
 
         $this->client->submit($form);

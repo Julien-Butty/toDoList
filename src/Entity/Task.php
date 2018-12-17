@@ -6,8 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table
+ * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
+ * @ORM\Table(name="task")
+ * @ORM\EntityListeners({"App\Service\EventListener\TaskSubscriber"})
  */
 class Task
 {
@@ -42,7 +43,7 @@ class Task
     private $isDone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
      */
     private $user;
 
@@ -116,6 +117,18 @@ class Task
     public function __toString()
     {
         return $this->getUser();
+    }
+
+    public function getIsDone(): ?bool
+    {
+        return $this->isDone;
+    }
+
+    public function setIsDone(bool $isDone): self
+    {
+        $this->isDone = $isDone;
+
+        return $this;
     }
 
 }

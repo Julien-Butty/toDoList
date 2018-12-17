@@ -62,7 +62,6 @@ class UserHandler
 
             return true;
         }
-
         return false;
     }
 
