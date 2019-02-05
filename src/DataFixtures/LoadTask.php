@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 20/07/2018
- * Time: 17:20
+ * Time: 17:20.
  */
 
 namespace App\DataFixtures;
-
 
 use App\Entity\Task;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -24,27 +23,25 @@ class LoadTask extends Fixture implements DependentFixtureInterface
         $task1->setUser($this->getReference('user1'));
         $manager->persist($task1);
 
-
         $task2 = new Task();
         $task2->setTitle('Implémentation des tests automatisés');
-        $task2->setContent("Faire les test unitaires et fonctionnels");
+        $task2->setContent('Faire les test unitaires et fonctionnels');
         $task2->setUser($this->getReference('user2'));
         $manager->persist($task2);
 
-
         $task3 = new Task();
         $task3->setTitle('Task Anonyme');
-        $task3->setContent("Essai user anonyme");
+        $task3->setContent('Essai user anonyme');
         $manager->persist($task3);
 
         $task4 = new Task();
         $task4->setTitle('Task 2 Anonyme');
-        $task4->setContent("Essai 2 user anonyme");
+        $task4->setContent('Essai 2 user anonyme');
         $manager->persist($task4);
 
         $task5 = new Task();
         $task5->setTitle('Task pour essai ');
-        $task5->setContent("Essai");
+        $task5->setContent('Essai');
         $task5->setUser($this->getReference('user1'));
         $manager->persist($task5);
 
@@ -55,16 +52,12 @@ class LoadTask extends Fixture implements DependentFixtureInterface
         $manager->persist($task6);
 
         $manager->flush();
-
-
     }
 
     public function getDependencies()
     {
-        return array(
+        return [
             LoadUsers::class,
-        );
+        ];
     }
-
-
 }

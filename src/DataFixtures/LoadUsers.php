@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 20/07/2018
- * Time: 17:13
+ * Time: 17:13.
  */
 
 namespace App\DataFixtures;
-
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -50,6 +49,4 @@ class LoadUsers extends Fixture
 
         $manager->flush();
     }
-
-
 }

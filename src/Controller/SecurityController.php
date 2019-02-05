@@ -13,9 +13,8 @@ class SecurityController extends Controller
     /**
      * @Route("/login", name="login")
      */
-    public function loginAction(Request $request, AuthenticationUtils $utils)
+    public function login(Request $request, AuthenticationUtils $utils)
     {
-
         $error = $utils->getLastAuthenticationError();
         $lastUsername = $utils->getLastUsername();
 
@@ -23,24 +22,16 @@ class SecurityController extends Controller
             '_username' => $lastUsername,
         ]);
 
-        return $this->render('security/login.html.twig', array(
+        return $this->render('security/login.html.twig', [
             'form' => $form->createView(),
-            'error'         => $error,
-        ));
-    }
-
-    /**
-     * @Route("/login_check", name="login_check")
-     */
-    public function loginCheck()
-    {
-        // This code is never executed.
+            'error' => $error,
+        ]);
     }
 
     /**
      * @Route("/logout", name="logout")
      */
-    public function logoutCheck()
+    public function logout()
     {
         // This code is never executed.
     }

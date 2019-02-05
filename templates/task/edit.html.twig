@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
-
+{% block header_img %}
+    <img class="slide-image rounded" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">
+{% endblock %}
 {% block body %}
-    <div class="flex-row">
+    <div class="flex-row mb-5">
         {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
             {{ form_widget(form) }}
 
             <button type="submit" class="btn btn-success pull-right">Modifier</button>
         {{ form_end(form) }}
     </div>
+    <hr>
 {% endblock %}

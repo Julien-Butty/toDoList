@@ -3,23 +3,19 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 17/07/2018
- * Time: 11:21
+ * Time: 11:21.
  */
 
 namespace App\Security;
 
-
 use App\Entity\User;
 use App\Form\LoginType;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -47,8 +43,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     private $passwordEncoder;
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManagerInterface $em, RouterInterface $router, UserPasswordEncoderInterface $passwordEncoder)
-    {
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        EntityManagerInterface $em,
+        RouterInterface $router,
+        UserPasswordEncoderInterface $passwordEncoder
+    ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->router = $router;
@@ -62,16 +62,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function supports(Request $request)
     {
-        return ($request->getPathInfo() == '/login' && $request->isMethod('POST'));
+        return '/login' == $request->getPathInfo() && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
     {
-//        $isLoginSubmit = $request->getPathInfo() == '/login' && $request->isMethod( 'POST');
-//        if (!$isLoginSubmit) {
-//            return;
-//        }
-
         $form = $this->formFactory->create(LoginType::class);
         $form->handleRequest($request);
 
@@ -109,7 +104,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         if (!$targetPath) {
             $targetPath = $this->router->generate('homepage');
         }
+
         return new RedirectResponse($targetPath);
     }
-
 }

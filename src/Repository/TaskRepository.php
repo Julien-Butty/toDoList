@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 29/10/2018
- * Time: 06:41
+ * Time: 06:41.
  */
 
 namespace App\Repository;
-
 
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -38,10 +37,9 @@ class TaskRepository extends ServiceEntityRepository
             ->setParameter('isDone', 1)
             ->orderBy('t.id', 'DESC');
 
-    $query = $qb->getQuery();
-            $query->useResultCache(true, 3600, 'tasks_all');
+        $query = $qb->getQuery();
+        $query->useResultCache(true, 3600, 'tasks_all');
 
-            return $query->getResult();
+        return $query->getResult();
     }
-
 }

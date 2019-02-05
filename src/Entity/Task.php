@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Task
 {
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -49,7 +48,7 @@ class Task
 
     public function __construct()
     {
-        $this->createdAt = new \Datetime();
+        $this->createdAt = new \DateTime();
         $this->isDone = false;
     }
 
@@ -63,7 +62,7 @@ class Task
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt): \DateTime
     {
         $this->createdAt = $createdAt;
     }
@@ -73,7 +72,7 @@ class Task
         return $this->title;
     }
 
-    public function setTitle($title)
+    public function setTitle(string $title): string
     {
         $this->title = $title;
     }
@@ -83,7 +82,7 @@ class Task
         return $this->content;
     }
 
-    public function setContent($content)
+    public function setContent(string $content): string
     {
         $this->content = $content;
     }
@@ -93,7 +92,7 @@ class Task
         return $this->isDone;
     }
 
-    public function toggle($flag)
+    public function toggle(bool $flag)
     {
         $this->isDone = $flag;
     }
@@ -109,7 +108,7 @@ class Task
     /**
      * @param \Symfony\Component\Security\Core\User\User $user
      */
-    public function setUser( User $user): void
+    public function setUser(User $user): void
     {
         $this->user = $user;
     }
@@ -130,5 +129,4 @@ class Task
 
         return $this;
     }
-
 }

@@ -3,20 +3,15 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 15/07/2018
- * Time: 11:27
+ * Time: 11:27.
  */
 
 namespace App\Security;
-
-
-
-
 
 use App\Entity\Task;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-
 
 class TaskVoter extends Voter
 {
@@ -25,7 +20,7 @@ class TaskVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, array(self::EDIT, self::DELETE))) {
+        if (!in_array($attribute, [self::EDIT, self::DELETE])) {
             return false;
         }
 
@@ -46,7 +41,7 @@ class TaskVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
                 return $this->canEdit($task, $user);
-            case  self::DELETE:
+            case self::DELETE:
                 return $this->canDelete($task, $user);
         }
 
@@ -55,11 +50,11 @@ class TaskVoter extends Voter
 
     public function canEdit(Task $task, User $user)
     {
-        if ($task->getUser() === $user ) {
+        if ($task->getUser() === $user) {
             return true;
         }
 
-        if ($task->getUser() === null && in_array('ROLE_ADMIN', $user->getRoles())) {
+        if (null === $task->getUser() && in_array('ROLE_ADMIN', $user->getRoles())) {
             return true;
         }
 
@@ -68,16 +63,14 @@ class TaskVoter extends Voter
 
     public function canDelete(Task $task, User $user)
     {
-        if ($task->getUser() === $user ) {
+        if ($task->getUser() === $user) {
             return true;
         }
 
-        if ($task->getUser() === null && in_array('ROLE_ADMIN', $user->getRoles())) {
+        if (null === $task->getUser() && in_array('ROLE_ADMIN', $user->getRoles())) {
             return true;
         }
 
         return false;
     }
-
-
 }

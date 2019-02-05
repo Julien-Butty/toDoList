@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 17/07/2018
- * Time: 17:50
+ * Time: 17:50.
  */
 
 namespace App\Doctrine;
-
 
 use App\Entity\User;
 use Doctrine\Common\EventSubscriber;
@@ -31,17 +30,16 @@ class HashPasswordListener implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if(!$entity instanceof User) {
+        if (!$entity instanceof User) {
             return;
         }
 
         $this->encodePassword($entity);
     }
 
-
     private function encodePassword(User $entity)
     {
-        if(!$entity->getPlainPassword()) {
+        if (!$entity->getPlainPassword()) {
             return;
         }
 
@@ -50,7 +48,6 @@ class HashPasswordListener implements EventSubscriber
             $entity->getPlainPassword()
         );
         $entity->setPassword($encoded);
-
     }
 
     public function preUpdate(LifecycleEventArgs $args)

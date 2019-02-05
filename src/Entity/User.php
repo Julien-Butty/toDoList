@@ -78,14 +78,13 @@ class User implements UserInterface
         return $this->username;
     }
 
-    public function setUsername($username)
+    public function setUsername(string $username)
     {
         $this->username = $username;
     }
 
     public function getSalt()
     {
-//        return null;
     }
 
     public function getPassword()
@@ -103,7 +102,7 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }
@@ -112,14 +111,13 @@ class User implements UserInterface
     {
         $roles = $this->roles;
 
-
         return $roles;
     }
 
     /**
      * @return mixed
      */
-    public function IsActive()
+    public function isActive()
     {
         return $this->active;
     }
@@ -127,7 +125,7 @@ class User implements UserInterface
     /**
      * @param mixed $isActive
      */
-    public function setActive($active)
+    public function setActive(bool $active)
     {
         $this->active = $active;
     }
@@ -143,8 +141,6 @@ class User implements UserInterface
         $this->roles = $roles;
     }
 
-
-
     public function eraseCredentials()
     {
         $this->plainPassword = null;
@@ -156,7 +152,6 @@ class User implements UserInterface
     public function getPlainPassword()
     {
         return $this->plainPassword;
-
     }
 
     /**
@@ -190,7 +185,6 @@ class User implements UserInterface
     {
         if ($this->tasks->contains($task)) {
             $this->tasks->removeElement($task);
-            // set the owning side to null (unless already changed)
             if ($task->getUser() === $this) {
                 $task->setUser(null);
             }

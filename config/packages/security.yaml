@@ -2,6 +2,7 @@ security:
     encoders:
         App\Entity\User: bcrypt
 
+#config/pakages/security.yaml
     providers:
         our_users:
             entity: { class: App\Entity\User, property: username }
@@ -18,11 +19,6 @@ security:
                     - App\Security\LoginFormAuthenticator
             pattern: ^/
             user_checker: App\Security\UserChecker
-#            form_login:
-#                login_path: login
-#                check_path: login_check
-#                always_use_default_target_path:  true
-#                default_target_path:  /
             logout:
                 path: /logout
 
