@@ -24,4 +24,4 @@ You can either:
 Your are all set !
 
 ## Contribute
-Go here for instructions : [contribute](contrib.md)
+Go here for instructions : [contribute](https://github.com/Julien-Butty/toDoList/blob/master/contributing.md)
