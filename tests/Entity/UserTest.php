@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 22/07/2018
- * Time: 12:09
+ * Time: 12:09.
  */
 
 namespace App\Tests\Entity;
-
 
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +15,7 @@ class UserTest extends TestCase
 {
     protected $object;
 
-    protected function SetUp()
+    protected function setUp()
     {
         $this->object = new User();
     }
@@ -24,7 +23,7 @@ class UserTest extends TestCase
     public function testGetterAndSetter()
     {
         $this->object->setUsername('test');
-        $this->assertEquals("test", $this->object->getUsername());
+        $this->assertEquals('test', $this->object->getUsername());
 
         $this->object->setPassword('test');
         $this->assertEquals('test', $this->object->getPassword());
@@ -37,10 +36,5 @@ class UserTest extends TestCase
 
         $this->object->setPlainPassword('test');
         $this->assertEquals('test', $this->object->getPlainPassword());
-
-
     }
-
-
-
 }

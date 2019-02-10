@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\tests\Service\ControllerHandler;
-
 
 use App\Service\ControllerHandler\UserHandler;
 
@@ -19,7 +17,7 @@ class UserHandlerTest
         $userType->method('isSubmitted')->willReturn(true);
         $userType->method('isValid')->willReturn(true);
 
-        $this->assertTrue($userHandler->createTask($userType,$user));
+        $this->assertTrue($userHandler->createTask($userType, $user));
     }
 
     public function testEditUser()
@@ -35,7 +33,4 @@ class UserHandlerTest
 
         $this->assertTrue($userHandler->editUser($userType, $user));
     }
-
-
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\tests\Form;
-
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -23,7 +21,7 @@ class UserTypeTest extends TypeTestCase
                 'second' => '123456',
             ],
             'email' => 'ju@adresse.com',
-            'roles' => 'ROLES_USER'
+            'roles' => 'ROLES_USER',
         ];
 
         $form = $this->factory->create(UserType::class, $user);
@@ -43,5 +41,4 @@ class UserTypeTest extends TypeTestCase
     {
         return [new ValidatorExtension(Validation::createValidator())];
     }
-
 }

@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 22/07/2018
- * Time: 12:42
+ * Time: 12:42.
  */
 
 namespace App\Tests\Entity;
-
 
 use App\Entity\Task;
 use App\Entity\User;
@@ -15,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class TaskTest extends TestCase
 {
-
     protected $object;
 
     protected function setUp()
@@ -35,9 +33,7 @@ class TaskTest extends TestCase
         $this->assertEquals('test', $this->object->getContent());
 
         $this->object->setUser($this->createMock(User::class));
-        $this->assertEquals($this->createMock(User::class),$this->object->getUser());
-
-
+        $this->assertEquals($this->createMock(User::class), $this->object->getUser());
     }
 
     public function testToggle()
@@ -47,5 +43,4 @@ class TaskTest extends TestCase
         $this->object->toggle(true);
         $this->assertTrue($this->object->isDone());
     }
-
 }

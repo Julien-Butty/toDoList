@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 07/08/2018
- * Time: 10:36
+ * Time: 10:36.
  */
 
 namespace App\tests\Doctrine;
-
 
 use App\Doctrine\HashPasswordListener;
 use App\Entity\User;
@@ -17,11 +16,9 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\UnitOfWork;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Tests\Encoder\UserPasswordEncoderTest;
 
 class HashPasswordListenerTest extends TestCase
 {
-
     public function testPrePersist()
     {
         $mockEncoder = $this->getMockBuilder(UserPasswordEncoderInterface::class)->disableOriginalConstructor()->getMock();
@@ -30,14 +27,12 @@ class HashPasswordListenerTest extends TestCase
 
         $hashPass = new HashPasswordListener($mockEncoder);
 
-
         $user = new User();
         $user->setPlainPassword('123');
 
         $mockArgs->expects($this->once())->method('getEntity')->willReturn($user);
 
         $hashPass->prePersist($mockArgs);
-
     }
 
     public function testPreUpdate()
@@ -47,7 +42,6 @@ class HashPasswordListenerTest extends TestCase
         $mockArgs = $this->getMockBuilder(LifecycleEventArgs::class)->disableOriginalConstructor()->getMock();
 
         $hashPass = new HashPasswordListener($mockEncoder);
-
 
         $user = new User();
         $user->setPlainPassword('123');
@@ -70,13 +64,5 @@ class HashPasswordListenerTest extends TestCase
         $hashPass->preUpdate($lifeCycleEventArgs);
 
         $this->assertEquals('123', $user->getPlainPassword());
-//        $this->assertNull($user->getPlainPassword());
-
-
-
     }
-
-
-
-
 }

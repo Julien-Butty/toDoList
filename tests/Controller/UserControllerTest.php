@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: julienbutty
  * Date: 06/08/2018
- * Time: 10:03
+ * Time: 10:03.
  */
 
 namespace App\Tests\Controller;
-
 
 use App\Entity\User;
 
@@ -37,14 +36,13 @@ class UserControllerTest extends SetUp
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');
 
         $form = $buttonCrawlerNode->form([
-            'user[username]'=> 'TestCreateUser',
-            'user[plainPassword]'=>array('first'=>'123', 'second'=>'123'),
+            'user[username]' => 'TestCreateUser',
+            'user[plainPassword]' => ['first' => '123', 'second' => '123'],
 
-            'user[email]'=>'user@gmail.com',
-            'user[roles]'=>array('ROLE_USER','ROLE_ADMIN'),
-            'user[active]'=> 1
+            'user[email]' => 'user@gmail.com',
+            'user[roles]' => ['ROLE_USER', 'ROLE_ADMIN'],
+            'user[active]' => 1,
         ]);
-
 
         $this->client->submit($form);
 
@@ -59,7 +57,7 @@ class UserControllerTest extends SetUp
     {
         $this->logIn('admin');
 
-        $user = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(User::class)->findOneBy(array('username'=>'TestCreateUser'));
+        $user = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(User::class)->findOneBy(['username' => 'TestCreateUser']);
         $id = $user->getId();
 
         $crawler = $this->client->request('GET', '/users/'.$id.'/edit');
@@ -67,12 +65,12 @@ class UserControllerTest extends SetUp
         $buttonCrawlerNode = $crawler->selectButton('Modifier');
 
         $form = $buttonCrawlerNode->form([
-            'user[username]'=> 'TestEditUser',
-            'user[plainPassword]'=>array('first'=>'123', 'second'=>'123'),
+            'user[username]' => 'TestEditUser',
+            'user[plainPassword]' => ['first' => '123', 'second' => '123'],
 
-            'user[email]'=>'user@gmail.com',
-            'user[roles]'=>array('ROLE_USER','ROLE_ADMIN'),
-            'user[active]' => 1
+            'user[email]' => 'user@gmail.com',
+            'user[roles]' => ['ROLE_USER', 'ROLE_ADMIN'],
+            'user[active]' => 1,
         ]);
 
         $this->client->submit($form);
@@ -83,11 +81,9 @@ class UserControllerTest extends SetUp
         $this->assertSame(1, $crawler->filter('html:contains("TestEditUser")')->count());
 
         /*==============  DELETE USER AFTER TEST PASSING  =================*/
-        $userEdit = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(User::class)->findOneBy(array('username'=>'TestEditUser'));
+        $userEdit = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(User::class)->findOneBy(['username' => 'TestEditUser']);
 
         $this->client->getContainer()->get('doctrine.orm.entity_manager')->remove($userEdit);
         $this->client->getContainer()->get('doctrine.orm.entity_manager')->flush();
-
     }
-
 }

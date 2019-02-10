@@ -2,13 +2,10 @@
 
 namespace App\Tests\Controller;
 
-
 class DefaultControllerTest extends SetUp
 {
-
     public function testNotLoggedHomepage()
     {
-
         $this->client->request('GET', '/');
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         $crawler = $this->client->followRedirect();
@@ -24,6 +21,4 @@ class DefaultControllerTest extends SetUp
 
         $this->assertEquals(1, $crawler->filter('html:contains("Bienvenue sur Todo List")')->count());
     }
-
-
 }

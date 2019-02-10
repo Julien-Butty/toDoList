@@ -67,22 +67,22 @@ class Task
         $this->createdAt = $createdAt;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): string
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
 
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    public function setContent(string $content): string
+    public function setContent(string $content)
     {
         $this->content = $content;
     }

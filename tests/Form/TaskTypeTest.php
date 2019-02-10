@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\tests\Form;
-
 
 use App\Entity\Task;
 use App\Form\TaskType;
@@ -18,7 +16,7 @@ class TaskTypeTest extends TypeTestCase
 
         $formData = [
             'title' => 'test',
-            'content' => 'test'
+            'content' => 'test',
         ];
 
         $form = $this->factory->create(TaskType::class, $task);
@@ -36,5 +34,4 @@ class TaskTypeTest extends TypeTestCase
     {
         return [new ValidatorExtension(Validation::createValidator())];
     }
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\tests\Service\ControllerHandler;
-
 
 use App\Entity\Task;
 use App\Entity\User;
@@ -30,9 +28,7 @@ class TaskHandlerTest extends TestCase
         $taskType->method('isValid')->willReturn($status);
 
         $this->assertEquals($status, $taskHandler->createTask($taskType, $task, $user));
-
     }
-
 
     public function testEditTaskSubmitted()
     {
@@ -50,8 +46,6 @@ class TaskHandlerTest extends TestCase
 
         $this->assertTrue($taskHandler->editTask($taskType, $task));
         $this->assertEquals('testedit', $task->getContent());
-
-
     }
 
     public function testEditTaskNoSubmitted()
@@ -64,7 +58,6 @@ class TaskHandlerTest extends TestCase
         $taskHandler = new TaskHandler($entityManager);
 
         $this->assertFalse($taskHandler->editTask($taskType, $task));
-
     }
 
     public function testToggleTask()
@@ -73,7 +66,6 @@ class TaskHandlerTest extends TestCase
         $task = new Task();
 
         $taskHandler = new TaskHandler($entityManager);
-
 
         $this->assertEquals($task->isDone(), $taskHandler->toggleTask($task));
     }
@@ -93,12 +85,11 @@ class TaskHandlerTest extends TestCase
     {
         return [
             [
-                'status' => true
+                'status' => true,
             ],
             [
-                'status' => false
-            ]
+                'status' => false,
+            ],
         ];
     }
-
 }

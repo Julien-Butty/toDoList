@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\tests\Security;
-
 
 use App\Entity\Task;
 use App\Entity\User;
@@ -11,21 +9,17 @@ use PHPUnit\Framework\TestCase;
 
 class TaskVoterTest extends TestCase
 {
-
     public function voteOnAttributeTest()
     {
-        $reflectionClass = new \ReflectionClass(TaskVoterTest::class);
+        $reflectionClass = new \ReflectionClass(self::class);
         $reflectionMethod = $reflectionClass->getMethod('voteOnAttribute');
         $reflectionMethod->setAccessible(true);
 
         $voter = new TaskVoter();
         $task = new Task();
         $attribute = 'EDIT';
-
-
-
-
     }
+
     public function testCanEdit()
     {
         $user = new User();
