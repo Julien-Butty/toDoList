@@ -11,10 +11,9 @@ namespace App\Service\ControllerHandler;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
 
-class TaskHandler extends Controller
+class TaskHandler
 {
     /**
      * @var EntityManagerInterface

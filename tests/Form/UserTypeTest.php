@@ -22,6 +22,7 @@ class UserTypeTest extends TypeTestCase
             ],
             'email' => 'ju@adresse.com',
             'roles' => 'ROLES_USER',
+            'active' => true,
         ];
 
         $form = $this->factory->create(UserType::class, $user);
@@ -30,6 +31,7 @@ class UserTypeTest extends TypeTestCase
         $user->setPlainPassword('123456');
         $user->setEmail('ju@adresse.com');
         $user->setRoles(['ROLES_USER']);
+        $user->setActive(true);
 
         $form->submit($formData);
         $this->assertTrue($form->isSynchronized());

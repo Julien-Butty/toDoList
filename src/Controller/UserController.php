@@ -6,9 +6,9 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Service\ControllerHandler\UserHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Security("is_granted('ROLE_ADMIN')")
  */
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @var FormFactoryInterface

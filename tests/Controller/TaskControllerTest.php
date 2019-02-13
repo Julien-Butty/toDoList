@@ -47,10 +47,9 @@ class TaskControllerTest extends SetUp
 
     public function testEditAction()
     {
-        $this->logIn();
+        $this->logIn('admin');
         $task = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository('App:Task')->findOneBy([]);
         $id = $task->getId();
-
         $crawler = $this->client->request('GET', '/tasks/'.$id.'/edit');
 
         $buttonCrawlerNode = $crawler->selectButton('Modifier');

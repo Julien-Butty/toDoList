@@ -7,16 +7,16 @@ use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use App\Service\ControllerHandler\TaskHandler;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class TaskController.
  */
-class TaskController extends Controller
+class TaskController extends AbstractController
 {
     /**
      * @var FormFactory
