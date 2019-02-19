@@ -23,6 +23,7 @@ class UserChecker implements UserCheckerInterface
 
         if (!$user->isActive()) {
             throw new CustomUserMessageAuthenticationException(
+                'Votre compte a été désactivé :('
             );
         }
     }
