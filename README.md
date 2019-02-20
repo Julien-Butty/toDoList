@@ -1,7 +1,6 @@
 ToDoList
 ========
-[![Build Status](https://travis-ci.org/Julien-Butty/toDoList.svg?branch=master)](https://travis-ci.org/Julien-Butty/toDoList)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9c9445cf96a24777ab6e2d66800805be)](https://www.codacy.com/app/Julien-Butty/toDoList?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Julien-Butty/toDoList&amp;utm_campaign=Badge_Grade)
 
 ## Installation
 
