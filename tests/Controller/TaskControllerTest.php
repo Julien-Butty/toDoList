@@ -40,9 +40,8 @@ class TaskControllerTest extends SetUp
         $this->client->submit($form);
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
-        $crawler = $this->client->followRedirect();
+        $this->client->followRedirect();
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $crawler->filter('html:contains("Essai Admin")')->count());
     }
 
     public function testEditAction()
@@ -61,9 +60,8 @@ class TaskControllerTest extends SetUp
         $this->client->submit($form);
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         $this->assertTrue($this->client->getResponse()->isRedirect());
-        $crawler = $this->client->followRedirect();
+        $this->client->followRedirect();
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame(1, $crawler->filter('html:contains("Essai Test")')->count());
     }
 
     public function testToggleTaskAction()
@@ -78,6 +76,7 @@ class TaskControllerTest extends SetUp
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $crawler->selectButton('Marquer comme faite');
     }
 
     public function testDeleteAction()

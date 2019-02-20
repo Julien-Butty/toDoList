@@ -19,6 +19,6 @@ class DefaultControllerTest extends SetUp
         $crawler = $this->client->request('GET', '/');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals(1, $crawler->filter('html:contains("Bienvenue sur Todo List")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("Bienvenue sur Todo & Co")')->count());
     }
 }

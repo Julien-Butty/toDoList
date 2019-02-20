@@ -113,11 +113,6 @@ class Task
         $this->user = $user;
     }
 
-    public function __toString()
-    {
-        return $this->getUser();
-    }
-
     public function getIsDone(): ?bool
     {
         return $this->isDone;

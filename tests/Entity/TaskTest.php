@@ -34,6 +34,9 @@ class TaskTest extends TestCase
 
         $this->object->setUser($this->createMock(User::class));
         $this->assertEquals($this->createMock(User::class), $this->object->getUser());
+
+        $this->object->setIsDone(false);
+        $this->assertFalse($this->object->getIsDone());
     }
 
     public function testToggle()

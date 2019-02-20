@@ -8,7 +8,9 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Task;
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
@@ -36,5 +38,17 @@ class UserTest extends TestCase
 
         $this->object->setPlainPassword('test');
         $this->assertEquals('test', $this->object->getPlainPassword());
+
+        $task = new Task();
+        $user = new User();
+        $task->setUser($user);
+
+        $this->object->addTask($task);
+        $this->assertInstanceOf(ArrayCollection::class, $this->object->getTasks());
+
+        $this->assertNull($this->object->getSalt());
+
+        $this->object->eraseCredentials();
+        $this->assertNull($this->object->getPlainPassword());
     }
 }
